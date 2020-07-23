@@ -1,0 +1,25 @@
+/* 
+   TC - O(N)
+   SC - O(1)
+*/
+
+
+class Solution {
+    public String toLowerCase(String str) {
+        
+        String str2 = "";
+        for(char c : str.toCharArray()){
+            int asc = c - 'a';
+            if(asc >= -32 && asc <=-7 ){ //then it is in upper case
+                asc = c - 'A';
+                
+                int temp = 'a' + asc;
+                str2 += String.valueOf((char)temp);
+            }else{
+                str2 += String.valueOf(c);
+            }
+        }
+        
+        return str2;
+    }
+}
