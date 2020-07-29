@@ -1,0 +1,62 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        
+        if(head == null || head.next == null){
+            return null; //as it should not return any number when list has only one node present
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        
+        // int length = 0;
+        // while(slow!=null){
+        //     length++;
+        //     slow = slow.next;
+        // }
+        
+        /*this is to take care when node to delete is first node */
+        /* if n is more than the length then the leet code compiler removes first element so i did head.next */
+        /*************************************************************
+        if((length - n) == 0 || (length - n) < 0 ){
+            return head.next;
+        }
+        
+        //i forgot reinitialize the slow with head...oops one wrong submission
+        slow = head;
+        
+        // for(int i=1; i<=n +1 ; i++){
+        //     fast = fast.next;
+        // }
+        
+        *************************************************************/
+        int i = 1;
+        int traversed = 0;
+        while(fast!=null && i<=n+1){
+             i++;
+             traversed++;
+             fast = fast.next;
+        }
+        
+        if(traversed == n || traversed <n){
+            return head.next;
+        }
+        
+        while(fast!= null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        
+        slow.next = slow.next.next;
+        
+        return head;
+    }
+}
