@@ -1,0 +1,82 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public void reorderList(ListNode head) {
+        
+        /*Approach
+        1. Split the LL from middle
+        2. Reverse the second half
+        3. Maintain pointers in both the LL
+        4. Start pointing each other
+        */
+        if(head == null || head.next ==null || head.next.next == null)
+            return ;
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        while(fast!=null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        ListNode head2 = reverse(slow.next);
+        slow.next = null;
+        
+        //ListNode  preserve = head;
+        
+        /*
+        ListNode temp = head.next;
+        ListNode temp2 = head2.next;
+        while(head != null && head2 != null){
+  
+            
+            head.next = head2;
+            head2.next = temp;
+            
+            head = temp;
+            head2 = temp2;
+            
+            if(head!=null)
+                temp = head.next;
+            if(head2!=null)
+                temp2 = head2.next;
+
+            }
+        */
+        /*Another way is to start from second list and make link with first's head next element */
+          while (head != null && head2 != null) {
+            ListNode temp1 = head.next;
+            ListNode temp2 = head2.next;
+            head2.next = head.next;
+            head.next = head2;
+            head = temp1; //this way I don't have to check weather head is null as in above condition
+            head2 = temp2;
+        }
+        
+       // return preserve;
+        
+    }
+    
+    public ListNode reverse(ListNode head){
+        ListNode prev = null, next;
+        ListNode current = head;
+        while(current!=null){
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        
+        return prev;
+    }
+    
+    
+}
