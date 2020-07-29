@@ -1,0 +1,90 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        
+        if(head == null || head.next == null){
+            return head; //as it should not return any number when list has only one node present
+        }
+        
+        ListNode temp = head;
+        int n = 0;
+        while(temp!=null){
+            n++;
+            temp = temp.next;
+        }
+        
+        k = k % n;
+        if(k == 0)
+            return head;
+        
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        // int i=1;
+        // while(fast!=null && i<=k+1){
+        //     i++;
+        //     //length++;
+        //     fast = fast.next;
+        // }
+        
+        for(int i=1; i<=k+1 ; i++){
+            fast = fast.next;
+        }
+        
+        while(fast!=null){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        
+        ListNode head2 = slow.next;
+        slow.next = null;
+        
+        temp = head2;
+        while(temp.next!=null){
+            temp=temp.next;
+        }
+        
+        temp.next = head;
+        return head2;
+        
+        
+        // int i = 1;
+        // int length = 0;
+        // while(fast!=null && i<=k+1){
+        //     i++;
+        //     length++;
+        //     fast = fast.next;
+        // }
+        // if(length <= k)
+        // int rotation = k % length; //to avoid extra rotation
+        
+      
+        
+        
+        
+    }
+    
+    public ListNode reverse(ListNode head){
+        ListNode prev = null;
+        ListNode current = head;
+        ListNode next;
+        
+        while(current !=null){
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        
+        return prev;
+    }
+}
