@@ -1,0 +1,30 @@
+class Solution {
+    public String reverseOnlyLetters(String S) {
+        char arr[] = S.toCharArray();
+        int low = 0;
+        int high = arr.length - 1;
+        
+        while(low<high){
+            
+            //if( !(arr[low]>=65 && arr[low]<=90) && !(arr[low]>=97 && arr[low]<=122) ){
+            if(!Character.isLetter(arr[low])){
+
+                low++;
+                continue;
+            }
+            // else if(!(arr[high]>=65 && arr[high]<=90) && !(arr[high]>=97 && arr[high]<=122)){
+            else if(!Character.isLetter(arr[high])){
+                high--;
+                continue;
+            }
+            char temp = arr[low];
+            arr[low]= arr[high];
+            arr[high] = temp;
+            
+            low++;
+            high--;
+        }
+        
+        return String.valueOf(arr);
+    }
+} 
