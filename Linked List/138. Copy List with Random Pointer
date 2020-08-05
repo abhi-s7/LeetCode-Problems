@@ -1,0 +1,80 @@
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        
+        /*Approach Optimal
+        
+        1. Insert a new node after each node in the original LL
+        2. current is at the starting of the List
+        3. We want to add the random of the current to the random of next node of the current
+        4. current.next.random = current.random.next;
+        5. Now Split the LL alternatively
+        */
+        
+        //Node start = head;
+        if(head == null)
+            return null;
+        Node current = head;
+        
+        while(current!=null){
+            //adding the new extra node after each node of original LL
+            Node newNode =  new Node(current.val);
+            newNode.next = current.next;
+            current.next = newNode;
+            
+            current = current.next.next;
+        }
+        
+        current = head; //reinitializing the current
+        
+        while(current != null && current.next!= null){
+            if(current.random!=null)
+                current.next.random = current.random.next;//as next element of the random is actually random of original LL
+
+            current = current.next.next;
+        }
+        
+        return alternateSplit(head);
+        
+        
+    }
+    
+    public Node alternateSplit(Node head){
+        Node first = head;
+        Node second = head.next;
+        
+        Node temp = first;
+        Node temp2 = second;
+        
+        while(temp.next!=null && temp2.next!=null){
+            temp.next = temp2.next;
+            temp = temp.next;
+            
+            temp2.next = temp.next;
+            temp2 = temp2.next;
+        }
+        
+        if(temp.next!=null)
+            temp.next = null;
+        
+        if(temp2.next!=null)
+            temp2.next = null;
+        
+        return second;
+        
+    }
+}
