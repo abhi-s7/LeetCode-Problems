@@ -1,0 +1,68 @@
+class Solution {
+    public int uniqueMorseRepresentations(String[] words) {
+        
+        String[] arr = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        
+        /*
+        for(int j = 0; j<words.length; j++){
+            
+            String word = words[j];
+            
+            StringBuffer sb = new StringBuffer();
+            
+            for(int i=0; i<word.length(); i++){
+                int alpha = 0;
+                char ch = word.charAt(i);
+                if(ch>='A' && ch<='Z'){
+                    alpha = ch - 'A';
+                }else if(ch>='a' && ch<='z'){
+                    alpha = ch -'a';
+                }
+                sb.append(arr[alpha]);
+            }
+            
+            words[j] = sb.toString();
+            
+        }
+        
+        int count = 0;
+        Set<String> set = new HashSet<String>();
+        
+        for(String w : words) {
+        	if(!set.contains(w)) {
+        		set.add(w);
+        		count++;
+        	}
+        	
+        }
+        
+        return count;
+        
+        //Above code it too lengthy and Runtime is 2ms
+        */
+        
+        Set<String> set = new HashSet<String>();
+   
+        //int count = 0;
+        
+        for(String word : words){
+            StringBuffer sb = new StringBuffer();
+            for(char c: word.toCharArray()){
+                sb.append(arr[c-'a']);
+            }
+            set.add(sb.toString());
+
+            // if(!set.contains(sb.toString())){
+            //     count++;
+            //     set.add(sb.toString());
+            // }
+            
+        }
+        
+        return set.size();
+        
+        
+    }
+    
+    
+}
