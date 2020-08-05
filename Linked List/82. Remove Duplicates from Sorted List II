@@ -1,0 +1,68 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode prehead = new ListNode();
+        prehead.next = head;
+        
+        /*
+        ListNode temp = prehead;
+        ListNode curr = head;
+        ListNode prev = prehead;
+
+        while(curr != null && curr.next !=null){
+            /* 
+            prev!=prehead
+            I perfored this check as LeetCode was smart enough to put -1 and 0 at the first of the input array
+            and if I pass a empty node i.e.ListNode prehead = new ListNode(); LeetCode assumes the data to be 0
+            Therefore to prevent this I used the above two conditions as I don't want dummy node to participate in this process
+            */
+        /*
+            if((prev!=prehead && prev.val == curr.val) || curr.val==curr.next.val){
+                prev = prev.next;
+                curr = curr.next;
+            }else{
+                temp.next = curr;
+                temp = temp.next;
+                prev = prev.next;
+                curr = curr.next;
+            }
+        }
+        
+        if(curr!=null && curr.val!=prev.val)
+            temp.next = curr;
+        else
+            temp.next = null;
+            
+       */
+        
+        //Alternate approach
+        ListNode prev = prehead;
+        ListNode curr = head;
+        
+        while(curr!=null){
+            while(curr.next!=null && curr.val == curr.next.val){
+                //looping throught the duplicates & we get to last of the duplicate
+                curr = curr.next;
+            }
+            if(prev.next != curr){//ensuring that there is no duplicate found. It duplicate was found then curr would not be at next of prev
+                prev.next = curr.next;
+                curr = prev.next;
+            }else{//i.e. no duplicates have found
+                prev = prev.next;
+                curr = curr.next;
+            }
+        }
+        
+        return prehead.next;
+    }
+}
+
