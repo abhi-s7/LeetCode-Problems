@@ -1,0 +1,78 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        
+        /* Approach TC O(N) SC O(N)
+        1. Use a hashSet
+        2. While traversing add every node to the hashset
+        3. Also check weather the current node is present in set or not
+        4. If it is present then it will be the first element where cycle started
+        
+        */
+        /*
+        ListNode temp = head;
+        Set<ListNode> set = new HashSet<>();
+        while(temp!=null){
+            if(set.contains(temp))
+                return temp;
+            
+            set.add(temp);
+            temp = temp.next;
+        }
+        
+        return null;
+        
+        */
+        
+        /*Approach TC O(N) SC O(1)
+        1. Get the meeting point using start and fast pointer
+        2. Then increase the node from meeting point and head of List
+        3. Where they will meet is the start of the cycle
+        */
+        ListNode start = head;
+        
+        ListNode meetingPoint = meet(start);
+        
+        if(meetingPoint == null){
+            return null;
+        }
+        while(true){
+            if(meetingPoint == head)
+                return head;
+            meetingPoint = meetingPoint.next;
+            head = head.next;
+        }
+        
+        
+    }
+    
+    public ListNode meet(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        
+        if(head == null){
+            return null;
+        }
+        
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            
+            if(fast == slow)
+                return fast;
+        }
+        
+        return null;
+    }
+  
+}
