@@ -1,0 +1,76 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int sumRootToLeaf(TreeNode root) {
+        // StringBuffer sb = new StringBuffer();
+        String sb = "";
+        return helper(root, sb);
+        
+    }
+    
+    private int helper(TreeNode root, String sb){
+        
+        if(root == null) return 0;
+
+        if(root.left == null && root.right == null){
+            //sb.append(root.val);
+            sb+=root.val;
+            // return getDecimal(Integer.parseInt(sb));
+            return convertNum(sb);
+
+        }
+        
+        int count = 0;
+        
+        // count+=helper(root.left, sb.append(root.val));
+        // count+=helper(root.right, sb.append(root.val));
+        count+=helper(root.left,  sb + root.val);
+        count+=helper(root.right,  sb + root.val);
+        
+        return count;
+        
+    }
+    
+    int convertNum(String str){
+        int decimal = 0;
+        int n = 0;
+        int size = str.length()-1;
+        while( size>=0 ){
+            if(str.charAt(size) == '1')
+                decimal += Math.pow(2,n);
+            n++;
+            size--;
+        }
+        
+        return decimal;
+    }
+    
+//     public int getDecimal(int binary){  
+//     int decimal = 0;  
+//     int n = 0;  
+//     while(true){  
+//       if(binary == 0){  
+//         break;  
+//       } else {  
+//           int temp = binary%10;  
+//           decimal += temp*Math.pow(2, n);  
+//           binary = binary/10;  
+//           n++;  
+//        }  
+//     }  
+//     return decimal;  
+//     } 
+}
