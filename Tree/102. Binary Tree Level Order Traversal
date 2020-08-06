@@ -1,0 +1,110 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        
+        /* Approach 1 - To use null delimeter 
+        List<List<Integer>> parentList = new ArrayList<>();
+
+        if(root == null)
+            return parentList;
+        
+        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+        
+        queue.add(root);
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(root.val);
+        parentList.add(list);
+
+        queue.add(null);
+        
+        while(!queue.isEmpty()){
+            
+             TreeNode first = queue.peek();
+                   
+             if(first !=null){
+                
+                list = new ArrayList<Integer>();
+                while(queue.peek() != null){
+                    
+                    TreeNode parent = queue.remove();
+                                                            
+                    if(parent.left != null){
+                        queue.add(parent.left);
+                        list.add(parent.left.val);
+                    }
+                       
+
+                    if(parent.right != null){
+                        queue.add(parent.right);
+                        list.add(parent.right.val);
+                    }    
+                    
+                }
+                 if(list.size() != 0)
+                    parentList.add(list);
+                 
+                 queue.add(null);
+            }
+            queue.remove();
+  
+        }
+        
+        return parentList;
+        
+        */
+        
+        //Approach 2 - Using size which will work similar to null delimeter but less code
+        
+        
+        List<List<Integer>> main = new ArrayList<>();
+        
+        if(root == null)
+            return main;
+        
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while(queue.size() != 0){
+            
+            int size = queue.size();
+            List<Integer> current = new ArrayList<>();
+            
+            while(size != 0){
+                TreeNode temp = queue.remove();
+                current.add(temp.val);
+                
+                if(temp.left != null){
+                    queue.add(temp.left);
+                }
+                
+                 if(temp.right != null){
+                    queue.add(temp.right);
+                }
+                
+                size--;
+            }
+            //when we have reached a level then add the current list to the main list
+            main.add(current);
+        }
+        
+        
+        return main; 
+        
+        
+    }
+    
+}
