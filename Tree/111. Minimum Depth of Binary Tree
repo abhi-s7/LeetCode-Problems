@@ -1,0 +1,69 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Solution {
+     public int minDepth(TreeNode root) {
+         if(root == null)
+            return 0;
+        
+        if(root.left == null && root.right == null)
+            return 1;
+         
+        int left = minDepth(root.left);  //left call
+        int right = minDepth(root.right); //right call
+        
+        if(left == 0 || right == 0){ //this is necessary because when we enconter 0 with either on the left or right the Math.min will give 0
+            //therefore add the left or right and +1 is to count the node
+            return left + right + 1;
+        }else{
+            return Math.min(left, right) +1;
+        }
+     }
+}
+
+
+
+/* Approach 1 is to use helper method
+class Solution {
+     public int minDepth(TreeNode root) {
+         if(root == null)
+            return 0; //this will take care of the case when there are no nodes at first
+         return helper(root);
+         
+     
+     }
+    
+    public int helper(TreeNode root){
+        
+       if(root == null)
+            return Integer.MAX_VALUE; //MAX_VALUE is because we are comparing for Math.min(left, right)
+			//if i return 0 then Math.min(something, 0) will be 0 so we'll get an error
+        
+        if(root.left == null && root.right == null)
+            return 1; //i.e. the leaf node and we want to count it so calculate the depth
+         
+        int min = 0;
+        int left = helper(root.left);  //left call
+        int right = helper(root.right); //right call
+        
+        min = Math.min(left, right); //to calculate the depth along shortest path
+        return min+1; // this is to make that node count in the calculation. If we return just min
+		//then it will always return either 1 or Integer.MAX_VALUE
+        
+    }
+    
+}
+*/
