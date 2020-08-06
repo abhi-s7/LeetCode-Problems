@@ -1,0 +1,116 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    
+//     public void bottomup(TreeNode root,List<List<Integer>> main ,int level){
+//         if(root == null) return;
+//         /*Approach is to use dfs and start adding the empty list
+//             When the stack falls then we'll check the size of the list witht the level and will add the values in the bfs level to the list
+//         */
+//         if(main.size() <= level){   // or (level >= main.size())
+//              List<Integer> curr = new ArrayList<>();
+//              /*main.add(curr); this will burn your result as at level 1 at 9[node] 2 list has been formed [list 0, list 1] and acc to line no. logic
+//                 it will get the 0th list i.e. list 0 and add to it. but when level 2 is reached the size becomes 3 and list 2 will be added
+//                 [list 0, list1, list2] so 15 and 17 will be added to list 0 but already 9 has been added to 0th list
+//                 So we have to shift the list from 0th position such that new list is added to 0th position. [list2,list1, list0] and all nodes will //                    be
+//                 added at correct location.
+//             */
+//             main.add(0,curr);
+//         }
+        
+//         bottomup(root.left, main, level+1);
+//         bottomup(root.right, main, level+1);
+        
+//         List<Integer> temp = main.get((main.size()-1)-level);
+//         temp.add(root.val);
+        
+//     }
+    
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        
+        List<List<Integer>> main = new ArrayList<>();
+         if(root == null){
+            return main;
+        }
+        
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while(!queue.isEmpty()){
+            int size  = queue.size();
+            List<Integer> curr = new ArrayList<>();
+            
+            while(size != 0){
+                TreeNode temp = queue.pop();
+                
+                curr.add(temp.val);
+                
+                if(temp.left != null)
+                    queue.add(temp.left);
+                if(temp.right != null)
+                    queue.add(temp.right);
+                
+                size--;
+            }
+            main.add(0, curr);
+        }
+        
+        return main;
+        
+        /*Approach 2 - 2ms 
+        bottomup(root, main, 0);
+        return main;
+        */
+        
+        /* Approach 1 Using stack while adding the List - 3ms SC - O(N) TC O(N)*/
+        /* Approach 1 is to use stack and so bfs. When queue is empty start adding the elements in the stack in main list
+            They will add in the reverse fashion and we'll get the List as in it is from bottom to up */
+        
+       /*
+        
+        Stack<List<Integer>> stack = new Stack<>();
+        
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while(!queue.isEmpty()){
+            int size  = queue.size();
+            List<Integer> curr = new ArrayList<>();
+            
+            while(size != 0){
+                TreeNode temp = queue.pop();
+                
+                curr.add(temp.val);
+                
+                if(temp.left != null)
+                    queue.add(temp.left);
+                if(temp.right != null)
+                    queue.add(temp.right);
+                
+                size--;
+            }
+            stack.push(curr);
+        }
+        
+        
+        while(stack.size() != 0){
+            main.add(stack.pop());
+        }
+        
+        return main;
+        */
+    }
+}
