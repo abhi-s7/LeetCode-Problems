@@ -1,0 +1,71 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        
+        /*Iterative 
+        Logic: 
+        1. Pre order meand [Root, Left, Right]
+        2. When going to end of left with node = node.left we are actually covering root
+        3. So push the node in stack as well as add its val in list
+        4. When null occurs the else part works
+            4.1 Take the last added node in stack using pop() and make the call for right with node = node.right
+            4.2 If it is leaf node obviously null will be encountered again therefore above node will be poped
+            4.3 And will reach to right node
+        5. Reapeat above steps and preorder will be formed
+        
+        */
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> list = new ArrayList<>();
+        
+        TreeNode node = root;
+        while(!stack.isEmpty() || node != null)
+        {
+             if(node!=null){
+                //keep adding in stack as well as adding in list
+                stack.push(node);
+                list.add(node.val);
+                node = node.left;
+             }
+             else{
+                node = stack.pop();
+                node = node.right;
+             }   
+        } 
+        
+        return list;
+        
+        /*Recursive
+        List<Integer> list = new ArrayList<>();
+        helper(root,list);
+        return list;
+        */
+        
+        
+    }
+    /*
+     public void helper(TreeNode root,List<Integer> list){
+        if(root == null)
+            return;
+        
+        list.add(root.val);
+        helper(root.left, list);
+        helper(root.right, list);
+
+        
+     }
+     */
+}
