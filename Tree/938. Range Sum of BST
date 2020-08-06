@@ -1,0 +1,63 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int rangeSumBST(TreeNode root, int L, int R) {
+        /*Approach 2
+        Below Approach traverses all the nodes whether they lie in the range or not so we can skip it and make our code faster
+        */
+        
+        if(root == null) return 0;
+        
+        if(root.val<L) return rangeSumBST(root.right, L, R); //this will skip the result of current node as well as result of nodes left to it
+        if(root.val >R) return rangeSumBST(root.left, L, R);
+        
+        return root.val + rangeSumBST(root.right, L, R) + rangeSumBST(root.left, L, R);
+        
+        
+        
+        /*
+        if(root == null) return 0;
+        
+        int count = 0;
+        if(root.val >=L && root.val<=R)
+            count=root.val;
+        
+        count+=rangeSumBST(root.left, L, R);
+        count+=rangeSumBST(root.right, L, R);
+
+        return count;
+        
+        */
+//         if(root == null) return 0;
+        
+//         if(root.val == L || root.val == R)
+//             return root.val;
+        
+//         int count = root.val;
+//         int current = rangeSumBST(root.left, L, R);
+//         int current2 = rangeSumBST(root.right, L, R);
+        
+//         if(current == 0 && current2 == 0)
+//             count = 0;
+//         else
+//             count = count + current + current2;
+
+//         return count;
+        
+        
+        
+    }
+}
