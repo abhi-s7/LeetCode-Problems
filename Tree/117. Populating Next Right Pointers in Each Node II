@@ -1,0 +1,138 @@
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+
+class Solution {
+    public Node connect(Node root) {
+        if(root == null) return null;
+        LinkedList<Node> queue = new LinkedList<>();
+        queue.add(root);
+        root.next = null;
+        // queue.add(null);
+        
+        while(!queue.isEmpty()){
+ 
+            int size = queue.size();
+            
+            Node prev = null;
+    
+            while(size != 0){
+                
+                Node temp = queue.removeFirst();
+                
+                 if(temp.left != null){
+                    
+                    if(prev!=null){
+                        prev.next = temp.left;
+                    }
+                    prev = temp.left;
+                    queue.add(temp.left);
+                 }
+                
+                if(temp.right != null){
+                    if(prev!=null)
+                        prev.next = temp.right;
+                    prev =  temp.right;
+                    queue.add(temp.right);
+                }  
+                
+                size--;
+                
+            }
+            //prev.next = null;
+            
+        }
+        
+         return root;
+    } //connect() ends
+    
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+         while(queue.size()!=0){
+                
+                Node temp = queue.remove();
+                
+                if(temp.left != null){
+                    queue.add(temp.left); //this is to add in queue
+                    
+                    if(temp.right!=null){ //this is to make link with next pointer
+                        temp.left.next = temp.right;
+                    }else{ //temp.right is null
+                        
+                    Node t2 = queue.peek();
+                  
+                    if(t2 != null){
+                        
+                        if(t2.left != null)
+                            temp.left.next = t2.left;
+                        else if(t2.right != null)
+                            temp.left.next = t2.right;
+                        else temp.left.next = null         
+                    }
+                    
+                    
+                  }
+                              
+                        
+                } // if(temp.left != null) ends here
+                    
+                   
+                if(temp.right!=null){
+                    queue.add(temp.right);
+                    Node t2 = queue.peek();
+                  
+                    if(size-1 != 0 && t2 != null){
+                        
+                        if(t2.left != null)
+                            temp.right.next = t2.left;
+                        else if(t2.right != null)
+                            temp.right.next = t2.right;
+
+                        
+                    }else{
+                        temp.rigt.next = null;
+                    }
+                    
+                    
+                    
+                }
+                    
+                
+                size--;
+  
+            }
+
+*/
