@@ -1,0 +1,78 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+     public List<Integer> rightSideView(TreeNode root){
+         
+         List<Integer> list = new ArrayList<Integer>();
+         right(root, list, 0);
+         return list;
+         
+     }
+    
+     public void right(TreeNode curr, List<Integer> list,int level) {
+         if(curr == null) return;
+         
+         if(list.size() <= level)   //as size will be same as the level then add the value to list
+             list.add(curr.val);
+         
+         if (curr.right != null) right(curr.right, list, level + 1);//note that we are recurring right first as it will add right                                                                  //value first and that is what we want to add to the list
+         if (curr.left != null) right(curr.left, list, level + 1);
+     }
+    
+   
+}
+    
+    
+    
+/* Iterative Approach - 3ms
+
+ public List<Integer> rightSideView(TreeNode root) {
+       
+        List<Integer> list = new ArrayList<>();
+        if(root == null) return list;
+       
+        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        
+        while(!queue.isEmpty()){
+            
+            int size = queue.size();
+            if(size>=1){
+                TreeNode show = queue.get(size - 1);//this gives the last element
+                list.add(show.val);
+            }
+            
+            while(size != 0){
+                
+                TreeNode parent = queue.poll();
+                
+                if(parent.left!=null){
+                    queue.add(parent.left);
+                }
+                
+                if(parent.right != null){
+                    queue.add(parent.right);
+                }
+                
+                size--;
+            }
+        }
+        
+        return list;
+        
+    }
+
+*/
